@@ -94,8 +94,8 @@ Pour chacun :
 ![openVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/OpenVpn.png)
 
 
-### Envoi de la clé sur le serveur
-# Méthode : Copier la clé de PC1 vers PC2
+## Envoi de la clé sur le serveur
+### Méthode : Copier la clé de PC1 vers PC2
 
 1. **Copie de la clé de PC1 vers PC2**  
    Sur PC1, utilisez la commande suivante pour copier le fichier `static-OpenVPN.key` vers PC2. Cette commande utilise `scp` et nécessite des privilèges administratifs (`sudo`) :
@@ -120,7 +120,7 @@ Une fois connecté en SSH sur PC2, copiez la clé du répertoire personnel (`~`)
 ![copie ok](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/copie-ok.png)
 
 
-### Vérification du ping de PC1 vers PC2 avec Wireshark
+## Vérification du ping de PC1 vers PC2 avec Wireshark
 
 1. **Effectuer un ping depuis PC1 vers PC2 :**
 
@@ -140,7 +140,7 @@ Sélectionne l'interface réseau qui est utilisée pour la communication entre P
 3. **La partie Data du protocole ICMP est visible en clair**
 ![wireshark](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/wireshark.png)
 
-# Mise en place du VPN
+## Mise en place du VPN
 
 ### Sur PC1 :
 
@@ -162,3 +162,29 @@ Sélectionne l'interface réseau qui est utilisée pour la communication entre P
 ![serverOpenVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/serverOpenVpn.png)
 
 - La communication sécurisée est établit lorsque sur les 2 machines il y a le message Initialization Sequence Completed.
+
+
+## Test d'une communication sécurisée
+
+### 1. Lancer un ping de PC1 vers PC2
+- Ouvrir un terminal ou l’invite de commande sur **PC1**.
+- Exécuter la commande suivante pour tester la connectivité :
+  ```bash
+  ping 10.10.5.2
+
+![clt icmp OpenVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/clt-icmp-vpn.png)
+
+### 1. Lancer un ping de PC2 vers PC1
+    ```bash
+    ping 10.10.5.1
+
+![server icmp OpenVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/server-icmp-vpn.png)
+
+- Capturer le trafic OpenVPN
+- Ouvre Wireshark sur PC1 ou PC2.
+
+Sélectionne l’interface réseau utilisée par OpenVPN :
+
+- Si VPN actif → Choisis tun0 (trafic déjà déchiffré).
+- Si tu veux voir le chiffrement brut → Sélectionne eth0 ou wlan0 (interface réseau physique).
+![wireshark](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/wireshark.png)
