@@ -25,11 +25,11 @@ Pour chacun :
     ```bash
         network:
         ethernets:
-            enp0s3:
+            enp0s8:
             dhcp4: no
             addresses:
                 - 172.16.10.1/24
-            enp0s8:
+            enp0s3:
             dhcp4: yes
         version: 2
 
@@ -41,11 +41,11 @@ Pour chacun :
     ```bash
         network:
         ethernets:
-            enp0s3:
+            enp0s8:
             dhcp4: no
             addresses:
                 - 172.16.10.2/24
-            enp0s8:
+            enp0s3:
             dhcp4: yes
         version: 2
 
@@ -93,4 +93,72 @@ Pour chacun :
 
 ![openVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/OpenVpn.png)
 
+
+### Envoi de la clé sur le serveur
+# Méthode : Copier la clé de PC1 vers PC2
+
+1. **Copie de la clé de PC1 vers PC2**  
+   Sur PC1, utilisez la commande suivante pour copier le fichier `static-OpenVPN.key` vers PC2. Cette commande utilise `scp` et nécessite des privilèges administratifs (`sudo`) :
+    ```bash
+    sudo scp ma_cle_vpn.key wilder2@172.16.10.2:~
+
 ![copie-cle](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/copie-cle.png)
+
+2. Connexion en SSH sur PC2
+Ensuite, établissez une connexion SSH vers PC2 avec la commande suivante :
+    ```bash
+    ssh wilder2@172.16.10.2
+
+![connSSH](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/connSSH.png)
+### 3. Copie de la clé vers le répertoire approprié
+
+Une fois connecté en SSH sur PC2, copiez la clé du répertoire personnel (`~`) vers le répertoire `/etc/openvpn/server/`. Cette opération nécessite des privilèges administratifs. Utilisez la commande suivante :
+
+    ```bash
+    sudo cp ~/ma_cle_vpn.key /etc/openvpn/server/
+
+![copie ok](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/copie-ok.png)
+
+
+### Vérification du ping de PC1 vers PC2 avec Wireshark
+
+1. **Effectuer un ping depuis PC1 vers PC2 :**
+
+   Ouvre un terminal sur **PC1** et envoie un ping vers **PC2** (adresse IP `172.16.10.2`) :
+
+   ```bash
+   ping 172.16.10.2
+
+2. **Le protocole est bien l'ICMP **
+Lance Wireshark avec la commande suivante :
+    ```bash
+    sudo wireshark
+
+Sélectionne l'interface réseau qui est utilisée pour la communication entre PC1 et PC2 (généralement enp0s8 et, wlan0, etc.).
+
+
+3. **La partie Data du protocole ICMP est visible en clair**
+![wireshark](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/wireshark.png)
+
+# Mise en place du VPN
+
+### Sur PC1 :
+
+- **Place-toi dans le dossier où tu as placé la clé.**  
+- Assure-toi que le fichier de clé `ma_cle_vpn.key` est bien dans le dossier approprié. Tu peux utiliser la commande `cd` pour naviguer jusqu'à ce dossier. Par exemple :
+
+   ```bash
+    sudo openvpn --dev tun --remote 172.16.10.2 --ifconfig 10.10.5.1 10.10.5.2 --cipher AES-256-CBC --secret ma_cle_vpn.key
+
+![clientOpenVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/clientOpenVpn.png)
+
+### Sur PC2 :
+- **Place toi dans le dossier où tu as mis la clé.**
+- Exécute la commande 
+
+    ```bash
+    sudo openvpn --dev tun --ifconfig 10.10.5.2 10.10.5.1 --cipher AES-256-CBC --secret ma_cle_vpn.key
+
+![serverOpenVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/serverOpenVpn.png)
+
+- La communication sécurisée est établit lorsque sur les 2 machines il y a le message Initialization Sequence Completed.
