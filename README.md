@@ -8,10 +8,6 @@
 ✅ Créer une clé de chiffrement  
 ✅ Mettre en place un VPN à clé de chiffrement unique
 
-![openVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/tree/main/images/OpenVpn.png)
-
-![copie-cle](https://github.com/KAOUTARBAH/VPN-OpenVPN/tree/main/images/copie-cle.png)
-
 # Prérequis
 
 Tu as besoin de 2 PC ou VM sous VirtualBox.  
@@ -95,5 +91,6 @@ Pour chacun :
     ```bash
     sudo cat ma_cle_vpn.key 
 
+![openVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/OpenVpn.png)
 
-
+![copie-cle](https://github.com/KAOUTARBAH/VPN-OpenVPN/blob/main/images/copie-cle.png)
