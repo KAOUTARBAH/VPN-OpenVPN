@@ -93,4 +93,5 @@ Pour chacun :
 
 ![openVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/tree/main/images/OpenVpn.png)
 
+![copie-cle](https://github.com/KAOUTARBAH/VPN-OpenVPN/tree/main/images/copie-cle.png)
 
