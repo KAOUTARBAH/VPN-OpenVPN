@@ -171,5 +171,5 @@ sudo openvpn --genkey secret ma-cle_vpn.key
     ```bash
     sudo cat ma_cle_vpn.key 
 
-![vpn](https://github.com/KAOUTARBAH/Atelier--GPO/blob/main/images/OpenVpn.png)
+![openVpn](https://github.com/KAOUTARBAH/VPN-OpenVPN/tree/main/images/OpenVpn.png)
 
